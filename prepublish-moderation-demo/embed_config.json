@@ -1,0 +1,4 @@
+{
+  "embedding_model": "openai/clip-vit-base-patch32",
+  "expected_dim": 512
+}

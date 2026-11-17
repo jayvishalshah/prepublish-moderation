@@ -1,0 +1,9 @@
+streamlit
+joblib
+numpy
+opencv-python-headless
+pillow
+torch
+transformers
+huggingface_hub
+scikit-learn
