@@ -1,6 +1,8 @@
 # Multimodal AI Content Moderation System
 
-An AI-powered video content moderation system that analyzes user-uploaded videos and accompanying text before publication. Built using fine-tuned CLIP and DistilBERT models, the system identifies potentially policy-violating content and classifies it into three moderation categories: **Allowed**, **Not Allowed**, and **Flagged for Human Review**.
+An AI-powered video content moderation system that analyzes user-uploaded videos and accompanying text before publication. Built using the pretrained CLIP (Contrastive Language–Image Pre-training) model, the system analyzes video frames through image-text similarity and example-based classification to identify potentially policy-violating content.
+
+The system classifies content into three moderation categories: **Allowed**, **Not Allowed**, and **Flagged for Human Review**.
 
 **Live Demo:** [Try the Hugging Face Space](https://huggingface.co/spaces/jayvishalshah/prepublish-moderation-demo)
 
@@ -12,22 +14,23 @@ An AI-powered video content moderation system that analyzes user-uploaded videos
 
 Online platforms receive large volumes of user-generated video content. Manually reviewing every upload is time-consuming and difficult to scale.
 
-This project explores a multimodal AI approach to content moderation by combining visual and textual analysis to identify potential policy violations before content goes live.
+This project explores an AI-based approach to video content moderation using CLIP, a pretrained vision-language model.
 
-The system processes video frames and associated text captions, evaluates them against custom platform policies, and generates a moderation decision.
+The system extracts representative frames from uploaded videos and uses CLIP to compare visual content with text-based moderation descriptions and examples. Based on the classification results and custom moderation policies, it generates a moderation decision.
 
 The objective is to improve moderation efficiency while maintaining a human-in-the-loop approach for ambiguous or context-dependent cases.
 
 ## Key Features
 
-- **Multimodal Content Analysis:** Combines visual analysis of video frames with textual analysis of captions.
-- **AI-Based Classification:** Uses fine-tuned CLIP and DistilBERT models for visual and textual content understanding.
+- **Vision-Language Analysis:** Uses CLIP to understand visual content through image-text similarity.
+- **Example-Based Classification:** Compares extracted video frames against predefined text descriptions and examples.
+- **Video Frame Analysis:** Extracts representative frames from uploaded videos for moderation.
 - **Three-Tier Moderation:** Classifies content into:
   - 🟢 **Allowed:** Content that meets platform policies.
   - 🔴 **Not Allowed:** Content identified as violating platform policies.
   - 🟡 **Flagged for Human Review:** Ambiguous or context-dependent content requiring manual evaluation.
-- **Context-Aware Policy Enforcement:** Evaluates content against custom moderation policies.
-- **Pre-Upload Moderation:** Integrates moderation into a video upload workflow before publication.
+- **Custom Policy Evaluation:** Evaluates visual content against predefined moderation policies.
+- **Pre-Publication Moderation:** Integrates moderation into a video upload workflow before publication.
 - **Human-in-the-Loop Review:** Allows uncertain cases to receive additional human evaluation.
 
 ## Technology Stack
@@ -37,21 +40,20 @@ The objective is to improve moderation efficiency while maintaining a human-in-t
 | Programming Language | Python |
 | Deep Learning | PyTorch |
 | Model Framework | Hugging Face Transformers |
-| Vision Model | CLIP |
-| Text Model | DistilBERT |
+| Vision-Language Model | CLIP (Pretrained) |
 | Video Processing | OpenCV |
 | Application Framework | Streamlit |
-| Model Platform | Hugging Face |
+| Model Platform | Hugging Face Spaces |
 
 ## System Architecture
 
 The moderation workflow consists of the following stages:
 
 1. **Video Input:** The user submits a video through the application.
-2. **Frame Extraction:** OpenCV processes the video and extracts representative frames for analysis.
-3. **Visual Analysis:** CLIP evaluates visual content in the extracted frames.
-4. **Textual Analysis:** DistilBERT analyzes the accompanying text or captions.
-5. **Policy Evaluation:** Model outputs are evaluated against custom moderation policies.
+2. **Frame Extraction:** OpenCV processes the video and extracts representative frames.
+3. **Visual Analysis:** CLIP evaluates extracted frames using image-text similarity.
+4. **Example-Based Classification:** Visual content is compared against predefined moderation descriptions and examples.
+5. **Policy Evaluation:** Classification results are evaluated against custom moderation policies.
 6. **Moderation Decision:** The system assigns one of three outcomes: Allowed, Not Allowed, or Flagged for Human Review.
 7. **Human Review:** Flagged cases can be escalated for manual assessment.
 
@@ -104,8 +106,6 @@ pip install -r requirements.txt
 
 ### 5. Run the application
 
-If running locally with Streamlit, use:
-
 ```bash
 streamlit run <path-to-app-entrypoint.py>
 ```
@@ -116,25 +116,30 @@ Replace the placeholder with the actual Streamlit application file in the `src` 
 
 The application is deployed using Hugging Face Spaces.
 
-**Live Application:**  
+**Live Application:**
+
 https://huggingface.co/spaces/jayvishalshah/prepublish-moderation-demo
 
 ## Current Development Status
 
 The system is currently deployed and functional.
 
+The project uses the pretrained CLIP model without fine-tuning. Visual classification is explored through image-text similarity and example-based comparisons.
+
 Ongoing development focuses on:
 
-- Expanding the training dataset.
+- Expanding the evaluation dataset.
 - Improving classification performance on edge cases.
-- Evaluating multimodal model outputs.
+- Evaluating CLIP's image-text similarity results.
 - Improving contextual policy interpretation.
 - Refining the human-review workflow.
 - Reducing false positives and false negatives.
 
 ## Limitations and Considerations
 
-AI-based moderation is not perfect. Model predictions can be affected by contextual ambiguity, visual quality, incomplete captions, and limitations in training data.
+AI-based moderation is not perfect. Model predictions can be affected by contextual ambiguity, visual quality, frame selection, and limitations in pretrained model capabilities.
+
+CLIP's image-text similarity scores are not calibrated probabilities of policy violations. Results can also depend on the quality and selection of text descriptions and reference examples.
 
 The three-tier classification approach is intended to support human moderation rather than replace human judgment entirely.
 
@@ -142,16 +147,17 @@ Flagged cases should receive additional review before a final moderation decisio
 
 ## Future Improvements
 
-- Advanced multimodal fusion strategies.
+- Advanced CLIP-based classification strategies.
 - Improved contextual understanding of video content.
-- Expanded policy-specific training datasets.
+- Expanded policy-specific evaluation datasets.
 - Confidence-based moderation and escalation.
 - Model evaluation using precision, recall, F1-score, and confusion matrices.
+- Exploration of multimodal video analysis improvements.
 - Scalable video moderation pipelines.
 
 ## Author
 
-**Jay Vishal Shah**
+**Jayvishal Shah**
 
 AI/ML Engineering | AI Safety | Content Moderation | Multimodal Machine Learning
 
@@ -160,4 +166,4 @@ AI/ML Engineering | AI Safety | Content Moderation | Multimodal Machine Learning
 
 ---
 
-*This project explores the application of multimodal machine learning to scalable, policy-aware content moderation with human oversight.*
+*This project explores the application of pretrained vision-language models to scalable, policy-aware video content moderation with human oversight.*
